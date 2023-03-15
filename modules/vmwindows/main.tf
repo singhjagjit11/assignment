@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine_extension" "vm_windows_extension" {
 {
       "AntimalwareEnabled": true,
 
-  "commandToExecute": "powershell -ExecutionPolicy Unrestricted -Command 'Write-Output '''''"
+  "commandToExecute": "powershell -ExecutionPolicy Unrestricted -Command 'Write-Output ''hostnamectl''"
 }
 SETTINGS
 
