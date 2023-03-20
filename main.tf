@@ -22,11 +22,9 @@ module "common" {
   location            = "eastus"
   tags                = var.tags
 }
+module "vmlinux" {
+  source   = "./modules/vmlinux"
 
-
-
-module "linux" {
-  source   = "./modules/linux"
   vm_count = 2
   vm_size  = "Standard_B1s"
   ssh_user = "centos"
@@ -44,7 +42,8 @@ module "vm_windows" {
   subnet_id                       = module.network.subnet_id
   vm_name                         = "vm-windows"
   vm_size                         = "Standard_B1s"
-  admin_username                  = "adminuser"
+
+  admin_username                  = "jagjit"
   admin_password                  = "Jagjit@1998"
   os_disk_name                    = "osdisk-windows"
   os_type                         = "Windows"
@@ -64,26 +63,20 @@ module "datadisk" {
   subnet_id           = module.network.subnet_id
   vm_count            = 3
   tags                = var.tags
-  linux_vm_ids        = module.linux.vm_ids
+
+  linux_vm_ids        = module.vmlinux.vm_ids
+
   vmwindows_vm_id     = module.vm_windows.vm_id
 }
-
-
-
-
-
-
-
 
 module "loadbalancer" {
   source              = "./modules/loadbalancer"
    resource_group_name = "N01574661-assignment1-RG"
   location            = "eastus"
-linux_vm_ids = module.linux.vm_ids
+
+linux_vm_ids = module.vmlinux.vm_ids
 
 }
-
-
 
 module "database" {
   source              = "./modules/database"
@@ -91,7 +84,8 @@ module "database" {
   location            = "eastus"
   resource_group_name = "N01574661-assignment1-RG"
   db_name             = "mydatabase"
-  db_admin_username   = "adminuser"
-  db_admin_password   = "Jagjit@1998"
+
+  db_username   = "jagjit"
+  db_password   = "J@gjit1998"
 }
 
