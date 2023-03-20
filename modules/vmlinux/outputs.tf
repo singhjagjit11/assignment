@@ -1,18 +1,19 @@
 output "vm_hostnames" {
-  value = [azurerm_linux_virtual_machine.vm[0].name, azurerm_linux_virtual_machine.vm[1].name]
+  value = [for vm in azurerm_linux_virtual_machine.vm : vm.name]
 }
 
 output "vm_domain_names" {
-  value = [azurerm_linux_virtual_machine.vm[0].computer_name, azurerm_linux_virtual_machine.vm[1].computer_name]
+  value = [for vm in azurerm_linux_virtual_machine.vm : vm.computer_name]
 }
 
 output "vm_private_ips" {
-  value = [azurerm_network_interface.nic[0].private_ip_address, azurerm_network_interface.nic[1].private_ip_address]
+  value = [for nic in azurerm_network_interface.nic : nic.private_ip_address]
 }
 
 output "vm_public_ips" {
-  value = [azurerm_public_ip.public_ip[0].ip_address, azurerm_public_ip.public_ip[1].ip_address]
+  value = [for ip in azurerm_public_ip.public_ip : ip.ip_address]
 }
+
 output "vm_ids" {
-  value = azurerm_linux_virtual_machine.vm.*.id
+  value = [for vm in azurerm_linux_virtual_machine.vm : vm.id]
 }
